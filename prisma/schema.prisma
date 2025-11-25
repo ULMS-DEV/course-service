@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Course {
+  id           String @id @default(uuid())
+  code         String @unique
+  title        String
+  description  String
+  instructorId String
+
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  courseOffers CourseOffer[]
+  lectures     Lecture[]
+}
+
+model CourseOffer {
+  id        String @id @default(uuid())
+  courseId  String
+  studentId String
+  semester  String
+  year      Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  course Course  @relation(fields: [courseId], references: [id])
+  grades Grades?
+
+  @@unique([studentId, courseId, year, semester])
+}
+
+model Grades {
+  id            String @id @default(uuid())
+  courseOfferId String @unique
+  finalExam     Float?
+  midtermExam   Float?
+  assignments   Float?
+  attendance    Float?
+  quizzes       Float?
+  overallGrade  Float?
+
+  courseOffer CourseOffer @relation(fields: [courseOfferId], references: [id])
+}
+
+model Lecture {
+  id       String @id @default(uuid())
+  courseId String
+  topic    String
+  content  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  course Course @relation(fields: [courseId], references: [id])
+}
