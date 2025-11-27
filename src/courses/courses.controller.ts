@@ -33,4 +33,9 @@ export class CoursesController {
         const offers = await this.offersService.getOffersByStudent(data.studentId);
         return { offers };
     }
+
+    @GrpcMethod('CourseService', 'CreateLecture')
+    async createLecture(data: { courseId: string; topic: string; content: string }) {
+        return this.coursesService.createLecture(data.courseId, { topic: data.topic, content: data.content });
+    }
 }

@@ -23,14 +23,16 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.14.1",
     "@nestjs/common": "^11.0.1",
+    "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
     "@nestjs/mapped-types": "*",
     "@nestjs/microservices": "^11.1.9",
     "@nestjs/platform-express": "^11.0.1",
     "@prisma/client": "6.19.0",
+    "kafkajs": "^2.2.4",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "ulms-contracts": "^4.2.0"
+    "ulms-contracts": "^6.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

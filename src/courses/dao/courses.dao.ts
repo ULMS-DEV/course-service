@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Course } from "@prisma/client";
+import { Course, Lecture } from "@prisma/client";
 import { PrismaService } from "src/prisma/prisma.service";
 
 @Injectable()
@@ -35,6 +35,15 @@ export class CoursesDAO {
     async delete(id: string): Promise<Course> {
         return this.prisma.course.delete({
             where: { id },
+        });
+    }
+
+    async createLecture(courseId: string, data: { topic: string; content: string; }): Promise<Lecture> {
+        return this.prisma.lecture.create({
+            data: {
+                ...data,
+                courseId,
+            },
         });
     }
 }
